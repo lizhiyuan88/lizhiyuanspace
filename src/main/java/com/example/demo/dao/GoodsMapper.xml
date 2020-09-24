@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.pojo.Goods" >
+    <id column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="goods_no" property="goodsNo" jdbcType="VARCHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_details" property="goodsDetails" jdbcType="VARCHAR" />
+    <result column="goods_privce" property="goodsPrivce" jdbcType="INTEGER" />
+    <result column="goods_img" property="goodsImg" jdbcType="VARCHAR" />
+    <result column="goods_status" property="goodsStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    goods_id, goods_no, goods_name, goods_details, goods_privce, goods_img, goods_status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="listAllGoods" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+  </select>
+  
+  <select id="listPageGoods" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+  </select>
+  
+  <select id="queryGoodsByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where goods_name like #{goodsName}
+  </select>
+  
+  <select id="queryMaxGoods"  resultType="java.lang.String" >
+    select max(goods_no)
+    from goods
+    where goods_no like #{prefix}
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.pojo.Goods" >
+    insert into goods (goods_id, goods_no, goods_name, 
+      goods_details, goods_privce, goods_img, 
+      goods_status)
+    values (#{goodsId,jdbcType=INTEGER}, #{goodsNo,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, 
+      #{goodsDetails,jdbcType=VARCHAR}, #{goodsPrivce,jdbcType=INTEGER}, #{goodsImg,jdbcType=VARCHAR}, 
+      #{goodsStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.pojo.Goods" >
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsNo != null" >
+        goods_no,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsDetails != null" >
+        goods_details,
+      </if>
+      <if test="goodsPrivce != null" >
+        goods_privce,
+      </if>
+      <if test="goodsImg != null" >
+        goods_img,
+      </if>
+      <if test="goodsStatus != null" >
+        goods_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsNo != null" >
+        #{goodsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDetails != null" >
+        #{goodsDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrivce != null" >
+        #{goodsPrivce,jdbcType=INTEGER},
+      </if>
+      <if test="goodsImg != null" >
+        #{goodsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStatus != null" >
+        #{goodsStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.pojo.Goods" >
+    update goods
+    <set >
+      <if test="goodsNo != null" >
+        goods_no = #{goodsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDetails != null" >
+        goods_details = #{goodsDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrivce != null" >
+        goods_privce = #{goodsPrivce,jdbcType=INTEGER},
+      </if>
+      <if test="goodsImg != null" >
+        goods_img = #{goodsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStatus != null" >
+        goods_status = #{goodsStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.pojo.Goods" >
+    update goods
+    set goods_no = #{goodsNo,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_details = #{goodsDetails,jdbcType=VARCHAR},
+      goods_privce = #{goodsPrivce,jdbcType=INTEGER},
+      goods_img = #{goodsImg,jdbcType=VARCHAR},
+      goods_status = #{goodsStatus,jdbcType=INTEGER}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+</mapper>
